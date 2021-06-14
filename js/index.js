@@ -48,12 +48,12 @@ window.onload = () => {
         return obj;
     }
 
-    const earth = createSphere([100, 40, 40], 7500, 'https://avatars.mds.yandex.net/get-images-cbir/4027797/6IQhm60wtfWE5fiQ5KxUXw2214/ocr');
-    const mercury = createSphere([60, 20, 20], 4000, 'https://avatars.mds.yandex.net/get-images-cbir/4509884/K_arIdh1KM2gk3k25pAJRg2511/ocr');
-    const venus = createSphere([90, 20, 20], 5500, 'https://avatars.mds.yandex.net/get-images-cbir/4576821/5GTZ2aUaCci8L8y92q9t2Q9656/ocr');
-    const mars = createSphere([80, 20, 20], 8000, 'https://avatars.mds.yandex.net/get-images-cbir/4330622/ij5v83NbBTtp-ctdP6k2zw1454/ocr');
-    const jupiter = createSphere([350, 20, 20], 10700, 'https://avatars.mds.yandex.net/get-images-cbir/4549353/il4xziJs5o9vf47UcegWrw9975/ocr');
-    const saturn = createSphere([230, 20, 20], 12000, 'https://avatars.mds.yandex.net/get-images-cbir/4303061/ohpCpE9yJCa21CmiivNMjw3903/ocr');
+    let earth = createSphere([100, 40, 40], 7500, 'https://avatars.mds.yandex.net/get-images-cbir/4027797/6IQhm60wtfWE5fiQ5KxUXw2214/ocr');
+    let mercury = createSphere([60, 20, 20], 4000, 'https://avatars.mds.yandex.net/get-images-cbir/4509884/K_arIdh1KM2gk3k25pAJRg2511/ocr');
+    let venus = createSphere([90, 20, 20], 5500, 'https://avatars.mds.yandex.net/get-images-cbir/4576821/5GTZ2aUaCci8L8y92q9t2Q9656/ocr');
+    let mars = createSphere([80, 20, 20], 8000, 'https://avatars.mds.yandex.net/get-images-cbir/4330622/ij5v83NbBTtp-ctdP6k2zw1454/ocr');
+    let jupiter = createSphere([350, 20, 20], 10700, 'https://avatars.mds.yandex.net/get-images-cbir/4549353/il4xziJs5o9vf47UcegWrw9975/ocr');
+    let saturn = createSphere([230, 20, 20], 12000, 'https://avatars.mds.yandex.net/get-images-cbir/4303061/ohpCpE9yJCa21CmiivNMjw3903/ocr');
 
     const light = new THREE.AmbientLight(0x222222, 0.7);
     scene.add(light);
@@ -66,39 +66,29 @@ window.onload = () => {
 
     scene.add(sun_light);
 
-    // const controls = new THREE.OrbitControls(camera, canvas);
-    // controls.target.set(0, 0, 0);
-    // controls.update();
+    const setPositionHelper = (counter) => (planet, multiplier, distance) => {
+        planet.position.x = Math.sin(t * multiplier) * distance;
+        planet.position.z = Math.cos(t * multiplier) * distance;
+    }
+        
 
 
     let t = 0;
     const rendering = function () {
         sun.rotation.y += 0.001;
-
-        // camera.position.set(earth.position.x, 0, earth.position.z + 500);
-        // camera.lookAt(earth.position);
         camera.position.y = 1000;
         camera.lookAt(0, 0, 0);
 
-        mercury.position.x = Math.sin(t * 0.3) * 4000;
-        mercury.position.z = Math.cos(t * 0.3) * 4000;
+        const rotate = setPositionHelper(t);
 
-        venus.position.x = Math.sin(t * 0.2) * 5500;
-        venus.position.z = Math.cos(t * 0.2) * 5500;
+        rotate(mercury, 0.3, 4000);
+        rotate(venus, 0.2, 5500);
+        rotate(earth, 0.1, 7500);
+        rotate(mars, 0.08, 8000);
+        rotate(jupiter, 0.08, 10700);
+        rotate(saturn, 0.08, 12000);
 
-        earth.position.x = Math.sin(t * 0.1) * 7500;
-        earth.position.z = Math.cos(t * 0.1) * 7500;
         earth.rotation.y += 0.004;
-
-
-        mars.position.x = Math.sin(t * 0.08) * 8000;
-        mars.position.z = Math.cos(t * 0.08) * 8000;
-
-        jupiter.position.x = Math.sin(t * 0.08) * 10700;
-        jupiter.position.z = Math.cos(t * 0.08) * 10700;
-
-        saturn.position.x = Math.sin(t * 0.08) * 12000;
-        saturn.position.z = Math.cos(t * 0.08) * 12000;
 
         // controls.update();
         renderer.render(scene, camera);
