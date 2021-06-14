@@ -1,4 +1,3 @@
-
 window.onload = () => {
     const canvas = document.getElementById('canvas');
     const width = window.innerWidth;
@@ -17,10 +16,10 @@ window.onload = () => {
     const sun_texture = sun_loader.load('https://avatars.mds.yandex.net/get-images-cbir/3776399/X0Kej21mbBm4oBTuhbN1DA4224/ocr');
 
     const sun_geometry = new THREE.SphereGeometry(2300, 80, 80);
-    const sun_material = new THREE.MeshPhongMaterial({ map: sun_texture, side:THREE.BackSide})
+    const sun_material = new THREE.MeshPhongMaterial({ map: sun_texture, side: THREE.BackSide })
     const sun = new THREE.Mesh(sun_geometry, sun_material);
 
-    sun.position.set(0,0,0)
+    sun.position.set(0, 0, 0)
 
     scene.add(sun);
 
@@ -55,6 +54,28 @@ window.onload = () => {
     let jupiter = createSphere([350, 20, 20], 10700, 'https://avatars.mds.yandex.net/get-images-cbir/4549353/il4xziJs5o9vf47UcegWrw9975/ocr');
     let saturn = createSphere([230, 20, 20], 12000, 'https://avatars.mds.yandex.net/get-images-cbir/4303061/ohpCpE9yJCa21CmiivNMjw3903/ocr');
 
+    let saturnRing = (() => {
+        const geometry = new THREE.BufferGeometry();
+        const material = new THREE.PointsMaterial({ color: 0x3A3A3A, size: 1, sizeAttenuation: false });
+
+        let vertices = [];
+        for (let i = 0; i < 20000; i++)
+            vertices.push(
+                Math.sin(Math.PI / 180 * i) * (550 - i / 80),
+                Math.random() * 20,
+                Math.cos(Math.PI / 180 * i) * (550 - i / 80)
+            );
+        
+        vertices = new Float32Array(vertices);
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+        const ring = new THREE.Points(geometry, material);
+        ring.castShadow = true;
+        scene.add(ring);
+        return ring;
+    })();
+
+
     const light = new THREE.AmbientLight(0x222222, 0.7);
     scene.add(light);
 
@@ -70,7 +91,7 @@ window.onload = () => {
         planet.position.x = Math.sin(t * multiplier) * distance;
         planet.position.z = Math.cos(t * multiplier) * distance;
     }
-        
+
 
 
     let t = 0;
@@ -87,10 +108,10 @@ window.onload = () => {
         rotate(mars, 0.08, 8000);
         rotate(jupiter, 0.08, 10700);
         rotate(saturn, 0.08, 12000);
+        rotate(saturnRing, 0.08, 12000)
 
         earth.rotation.y += 0.004;
 
-        // controls.update();
         renderer.render(scene, camera);
         requestAnimationFrame(rendering);
         t += Math.PI / 180 * 2;
