@@ -47,24 +47,24 @@ window.onload = () => {
 
         return obj;
     }
-
+    
     function createOrbit(radius) {
         let geometry = new THREE.BufferGeometry();
         let material = new THREE.PointsMaterial({ color: 0xC0C0C0, size: 1, sizeAttenuation: false });
         let vertices = [];
-    
+
         for (let i = 0; i < 20000; i++) {
             x = Math.sin(Math.PI / 180 * i) * radius;
             y = 0;
             z = Math.cos(Math.PI / 180 * i) * radius;
             vertices.push(x, y, z);
         }
-    
+
         vertices = new Float32Array(vertices);
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
         let orbit = new THREE.Line(geometry, material);
         // orbit.castShadow = true;
-    
+
         return orbit;
     }
 
@@ -86,7 +86,7 @@ window.onload = () => {
                 Math.random() * 20,
                 Math.cos(Math.PI / 180 * i) * (550 - i / 80)
             );
-        
+
         vertices = new Float32Array(vertices);
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
@@ -94,6 +94,44 @@ window.onload = () => {
         ring.castShadow = true;
         scene.add(ring);
         return ring;
+    })();
+
+    let whiteStars = (() => {
+        let geometry = new THREE.BufferGeometry();
+        let vertices = [];
+
+        let starsMaterial = new THREE.PointsMaterial({ color: 0xFFFFFF, size: 1, opacity: 0.1, sizeAttenuation: false });
+
+        for (let i = 0; i < 40000; i++) {
+            vertices.push(
+                2000 * Math.random() - 1000,
+                2000 * Math.random() - 1000,
+                2000 * Math.random() - 1000);
+        }
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        let stars = new THREE.Points(geometry, starsMaterial);
+        stars.scale.set(80, 80, 80)
+        scene.add(stars);
+        return stars
+    })();
+    
+    let blueStars = (() => {
+        let geometry = new THREE.BufferGeometry();
+        let vertices = [];
+
+        let starsMaterial = new THREE.PointsMaterial({ color: 0xAAC1FF, size: 1, opacity: 0.1, sizeAttenuation: false });
+
+        for (let i = 0; i < 10000; i++) {
+            vertices.push(
+                2000 * Math.random() - 1000,
+                2000 * Math.random() - 1000,
+                2000 * Math.random() - 1000);
+        }
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        let stars = new THREE.Points(geometry, starsMaterial);
+        stars.scale.set(80, 80, 80)
+        scene.add(stars);
+        return stars;
     })();
 
 
