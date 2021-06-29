@@ -31,6 +31,7 @@ window.onload = () => {
         let material = new THREE.MeshNormalMaterial();
         if (texture) {
             const loader = new THREE.TextureLoader();
+            loader.anisotropy = 8;
             material = new THREE.MeshPhongMaterial({ map: loader.load(texture) });
         }
 
@@ -53,7 +54,7 @@ window.onload = () => {
         let material = new THREE.PointsMaterial({ color: 0xC0C0C0, size: 1, sizeAttenuation: false });
         let vertices = [];
 
-        for (let i = 0; i < 20000; i++) {
+        for (let i = 0; i < 500; i++) {
             x = Math.sin(Math.PI / 180 * i) * radius;
             y = 0;
             z = Math.cos(Math.PI / 180 * i) * radius;
