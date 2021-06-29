@@ -13,7 +13,8 @@ window.onload = () => {
     const scene = new THREE.Scene();
 
     const sun_loader = new THREE.TextureLoader();
-    const sun_texture = sun_loader.load('https://avatars.mds.yandex.net/get-images-cbir/3776399/X0Kej21mbBm4oBTuhbN1DA4224/ocr');
+    const sun_texture = sun_loader.load('./img/sun.jpg');
+    sun_texture.anisotropy = 16;
 
     const sun_geometry = new THREE.SphereGeometry(2300, 80, 80);
     const sun_material = new THREE.MeshPhongMaterial({ map: sun_texture, side: THREE.BackSide })
@@ -47,13 +48,13 @@ window.onload = () => {
         return obj;
     }
 
-    let earth = createSphere([100, 40, 40], 7500, 'https://avatars.mds.yandex.net/get-images-cbir/4027797/6IQhm60wtfWE5fiQ5KxUXw2214/ocr');
-    let mercury = createSphere([60, 20, 20], 4000, 'https://avatars.mds.yandex.net/get-images-cbir/4509884/K_arIdh1KM2gk3k25pAJRg2511/ocr');
-    let venus = createSphere([90, 20, 20], 5500, 'https://avatars.mds.yandex.net/get-images-cbir/4576821/5GTZ2aUaCci8L8y92q9t2Q9656/ocr');
-    let mars = createSphere([80, 20, 20], 8000, 'https://avatars.mds.yandex.net/get-images-cbir/4330622/ij5v83NbBTtp-ctdP6k2zw1454/ocr');
-    let jupiter = createSphere([350, 20, 20], 10700, 'https://avatars.mds.yandex.net/get-images-cbir/4549353/il4xziJs5o9vf47UcegWrw9975/ocr');
-    let saturn = createSphere([230, 20, 20], 12000, 'https://avatars.mds.yandex.net/get-images-cbir/4303061/ohpCpE9yJCa21CmiivNMjw3903/ocr');
-
+    const earth = createSphere([100, 40, 40], 7500, './img/earth.jpg');
+    const mercury = createSphere([60, 20, 20], 4000, './img/mercury.jpg');
+    const venus = createSphere([90, 20, 20], 5500,'./img/venus.jpg');
+    const mars = createSphere([80, 20, 20], 8000, './img/mars.jpg');
+    const jupiter = createSphere([350, 20, 20], 10700, './img/jupiter.jpg');
+    const saturn = createSphere([230, 20, 20], 12000, './img/saturn.jpg');
+    
     let saturnRing = (() => {
         const geometry = new THREE.BufferGeometry();
         const material = new THREE.PointsMaterial({ color: 0x3A3A3A, size: 1, sizeAttenuation: false });
@@ -74,7 +75,6 @@ window.onload = () => {
         scene.add(ring);
         return ring;
     })();
-
 
     const light = new THREE.AmbientLight(0x222222, 0.7);
     scene.add(light);
